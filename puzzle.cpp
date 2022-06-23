@@ -11,7 +11,7 @@
 
 //
 // hola como estan todos como les va ahorita 
-// bien
+// bien, y tu 
 
 using namespace std;
 
