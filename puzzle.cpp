@@ -10,7 +10,7 @@
 #include <fstream>
 
 
-// hola como estan todos
+// hola como estan todos como les va ahorita 
 
 using namespace std;
 
