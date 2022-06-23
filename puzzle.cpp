@@ -9,6 +9,9 @@
 #include <queue>
 #include <fstream>
 
+
+// hola como estan todos
+
 using namespace std;
 
 map<vector<vector<int> > , bool> visited; //declaring a map named "visited" that takes vector(which stores vectors that takes integer values) as its key, and a boolean as its value
