@@ -183,21 +183,30 @@ void solve(vector<vector<int> > a, int moves)
 	return;
 }
 
+int obtenerInversiones(int arr[]) {
+    int contador = 0;
+    for (int i = 0; i < 7; i++) {
+        for (int j = i+1; j < 8; j++) {
+            if (arr[j] && arr[i] &&  arr[i] > arr[j]) {
+                contador++;
+            }
+        }
+    }
+    return contador;
+}
+
+bool existeSolucion(int inversiones){
+    if(inversiones%2==0){
+            return true;
+        }else{return false;};
+    }
+
+
 int main()
 {
 
-  string line;
-  ifstream myFile("prog1_input.txt");
-  if (myFile.is_open())
-  {
-    while ( getline( myFile, line))
-    {
-     // cout << line << '\n';d
-    }
-    myFile.close();
-  }
-
-
+  	int arregloAux[8];
+	int k = 0;
 	cout<<"Please enter your 8 Puzzle as a string! \n";
 	cout<<"\nFor example => 0 1 3 4 2 5 7 8 6\n";
 	vector<vector<int> > a(3,vector<int> (3));	
@@ -205,9 +214,23 @@ int main()
 	{
 		for(int j=0;j<3;j++)
 		{
-			cin>>a[i][j];	
+			cin>>a[i][j];
+			if(a[i][j]!=0) {
+                arregloAux[k] = a[i][j];
+                k++;
+            }	
 		}
 	}
+
+	for (int i = 0; i<8; i++) {
+        cout<<arregloAux[i]<<" ";
+    }
+
+    cout<<endl;
+    if(existeSolucion(obtenerInversiones(arregloAux))==1){
+    cout<<"Numero de inversiones: "<<obtenerInversiones(arregloAux)<<", por lo tanto existe solucion.\n"<<endl;
+    }else{cout<<"Numero de inversiones: "<<obtenerInversiones(arregloAux)<<", por lo tanto no existe solucion.\n"<<endl;};
+
 	cout<<"\nPlease wait while the puzzle is solving...\n";
 	goal[0][0] = 1;
 	goal[0][1] = 2;
@@ -220,7 +243,6 @@ int main()
 	goal[2][2] = 0;
 	solve(a,0);
 
-	ofstream outFile;
-	outFile.open("prog1_output.txt");
 
+return 0;
 }
