@@ -22,28 +22,46 @@ bool visit(vector<vector<int>> a){ // esta funcion verifica si el nodo ya fue vi
 
 
 // Manhattan or A*(A-star) search to find the distance
-int manhattan(vector<vector<int>> a, int moves)
-{
+int manhattan(vector<vector<int>> a, int moves){
 	int dist = moves;
-	for (int i = 0; i < 3; i++) // for loop to go through each row and column (like matrices). [00,01,02,10,11,12,20,21,22] We'll be using this i,j loop more.
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			if (a[i][j] != 0)
-			{
-				for (int k = 0; k < 3; k++)
-				{
-					for (int l = 0; l < 3; l++)
-					{
-						if (a[i][j] == goal[k][l])
-							dist += abs(i - k) + abs(j - l); // absolute value since it may be negative
-					}
-				}
+	for (int i = 0; i < 3; i++){ // for loop to go through each row and column (like matrices). [00,01,02,10,11,12,20,21,22] We'll be using this i,j loop more.
+		for (int j = 0; j < 3; j++){
+			if (a[i][j] != 0){
+				//for (int k = 0; k < 3; k++){
+					//for (int l = 0; l < 3; l++){
+				int goal_i = (a[i][j] - 1) / 3;
+				int goal_j = (a[i][j] - 1) % 3;
+				dist += abs(j - goal_j) + abs(i - goal_i);
+				//if (a[i][j] == goal[k][l]){
+				//	dist += abs(i - k) + abs(j - l); // absolute value since it may be negative
+
+				//}
+					//}
+				//}
 			}
 		}
 	}
 	return dist;
 }
+
+//int manhat(vector<vector<int>> node)
+//{
+//	int sum = 0;
+//	for (int y = 0; y < 3; y++)
+//	{
+//		for (int x = 0; x < 3; x++)
+//		{
+//			int value = node[y][x];
+//			if (value != 0)
+//			{
+//				int goal_x = (value - 1) % 3;
+//				int goal_y = (value - 1) / 3;
+//				sum = sum + abs(x - goal_x) + abs(y - goal_y);
+//			}
+//		}
+//	}
+//	return sum;
+//}
 
 bool isGoal(vector<vector<int>> a){ // fucion que verifica si ya se encuentra en el estado objetivo
 	return (a[0][0] == 0 && a[0][1] == 1 && a[0][2] == 2 && a[1][0] == 3 && a[1][1] == 4 && a[1][2] == 5 && a[2][0] == 6 && a[2][1] == 7 && a[2][2] == 8);
