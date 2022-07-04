@@ -29,15 +29,15 @@ int manhattan(vector<vector<int>> a, int moves){
 			if (a[i][j] != 0){
 				//for (int k = 0; k < 3; k++){
 					//for (int l = 0; l < 3; l++){
-				int goal_i = (a[i][j] - 1) / 3;
-				int goal_j = (a[i][j] - 1) % 3;
-				dist += abs(j - goal_j) + abs(i - goal_i);
 				//if (a[i][j] == goal[k][l]){
 				//	dist += abs(i - k) + abs(j - l); // absolute value since it may be negative
 
 				//}
 					//}
 				//}
+				int goal_i = (a[i][j] - 1) / 3;
+				int goal_j = (a[i][j] - 1) % 3;
+				dist += abs(j - goal_j) + abs(i - goal_i);
 			}
 		}
 	}
