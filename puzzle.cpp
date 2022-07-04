@@ -22,26 +22,26 @@ bool visit(vector<vector<int>> a){ // esta funcion verifica si el nodo ya fue vi
 
 
 // Manhattan or A*(A-star) search to find the distance
-int manhattan(vector<vector<int>> a, int moves){
-	int dist = moves;
+int manhattan(vector<vector<int>> arreglo, int movimientos){
+	int distancia = movimientos;
 	for (int i = 0; i < 3; i++){ // for loop to go through each row and column (like matrices). [00,01,02,10,11,12,20,21,22] We'll be using this i,j loop more.
 		for (int j = 0; j < 3; j++){
-			if (a[i][j] != 0){
+			if (arreglo[i][j] != 0){
 				//for (int k = 0; k < 3; k++){
 					//for (int l = 0; l < 3; l++){
-				//if (a[i][j] == goal[k][l]){
-				//	dist += abs(i - k) + abs(j - l); // absolute value since it may be negative
+				//if (arreglo[i][j] == goal[k][l]){
+				//	distancia += abs(i - k) + abs(j - l); // absolute value since it may be negative
 
 				//}
 					//}
 				//}
-				int goal_i = (a[i][j] - 1) / 3;
-				int goal_j = (a[i][j] - 1) % 3;
-				dist += abs(j - goal_j) + abs(i - goal_i);
+				int goal_i = (arreglo[i][j] - 1) / 3;
+				int goal_j = (arreglo[i][j] - 1) % 3;
+				distancia += abs(j - goal_j) + abs(i - goal_i);
 			}
 		}
 	}
-	return dist;
+	return distancia;
 }
 
 //int manhat(vector<vector<int>> node)
