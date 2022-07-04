@@ -15,13 +15,11 @@ map<vector<vector<int>>, bool> visited;				  // declaring a map named "visited" 
 map<vector<vector<int>>, vector<vector<int>>> parent; // declaring a map named "parent" that takes vectors as its both key and value to keep track of the nodes
 vector<vector<int>> goal(3, vector<int>(3));
 
-bool visit(vector<vector<int>> a) // boolean to see if node is visited
-{
-	if (visited[a] == true)
-		return true;
 
-	return false;
+bool visit(vector<vector<int>> a){ // esta funcion verifica si el nodo ya fue visitado
+	return (visited[a] == true);
 }
+
 
 // Manhattan or A*(A-star) search to find the distance
 int manhattan(vector<vector<int>> a, int moves)
