@@ -68,7 +68,8 @@ int manhattan(vector<vector<int>> arreglo, int movimientos)
 
 bool isestadoObjetivo(vector<vector<int>> a)
 { // fucion que verifica si ya se encuentra en el estado objetivo
-	return (a[0][0] == 0 && a[0][1] == 1 && a[0][2] == 2 && a[1][0] == 3 && a[1][1] == 4 && a[1][2] == 5 && a[2][0] == 6 && a[2][1] == 7 && a[2][2] == 8);
+	return (a == estadoObjetivo);
+	//return (a[0][0] == 0 && a[0][1] == 1 && a[0][2] == 2 && a[1][0] == 3 && a[1][1] == 4 && a[1][2] == 5 && a[2][0] == 6 && a[2][1] == 7 && a[2][2] == 8);
 	// for (int i = 0; i < 3; i++){
 	//	for (int j = 0; j < 3; j++){
 	//		if (a[i][j] != estadoObjetivo[i][j]){
