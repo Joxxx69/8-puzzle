@@ -177,7 +177,6 @@ void ejemplosPuzzle(){
 			}
 		}
 		j = 0;
-		cout <<"1"<< endl;
 	} while (!existeSolucion(obtenerInversiones(arregloAux)));
 	for (int i = 0; i < 9;i++){
 		cout << arreglo[i] << "  ";
@@ -186,7 +185,7 @@ void ejemplosPuzzle(){
 }
 
 
-
+// esta de mejorar el de ejemplosPuzzle
 int main()
 {
 
