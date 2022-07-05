@@ -11,8 +11,8 @@
 
 using namespace std;
 
-map<vector<vector<int>>, bool> visited;				  // declaring a map named "visited" that takes vector(which stores vectors that takes integer values) as its key, and a boolean as its value
-map<vector<vector<int>>, vector<vector<int>>> parent; // declaring a map named "parent" that takes vectors as its both key and value to keep track of the nodes
+map<vector<vector<int>>, bool> visited;				  // declarando un mapa llamado "visitado" que toma vector (que almacena vectores que toman valores enteros) como su clave, y un booleano como su valor
+map<vector<vector<int>>, vector<vector<int>>> parent; // declarando un mapa llamado "padre" que toma vectores como su clave y valor para realizar un seguimiento de los nodos
 vector<vector<int>> goal(3, vector<int>(3));
 
 
