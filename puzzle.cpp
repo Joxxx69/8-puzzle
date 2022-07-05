@@ -38,7 +38,7 @@ int manhattan(vector<vector<int>> arreglo, int movimientos)
 	return distancia;
 }
 
-bool isestadoObjetivo(vector<vector<int>> a)
+bool estadoObjetivoAlcanzado(vector<vector<int>> a)
 { // fucion que verifica si ya se encuentra en el estado objetivo
 	return (a == estadoObjetivo);
 	//return (a[0][0] == 0 && a[0][1] == 1 && a[0][2] == 2 && a[1][0] == 3 && a[1][1] == 4 && a[1][2] == 5 && a[2][0] == 6 && a[2][1] == 7 && a[2][2] == 8);
