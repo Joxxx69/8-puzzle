@@ -163,15 +163,25 @@ bool repeticionDominio(int num, int arreglo[]){
 
 void ejemplosPuzzle(){
 	srand(time(NULL));
-    int num, arreglo[9];
+    int num, arreglo[9], arregloAux[8],j=0;
 	cout << endl<< "Ejemplo: ";
-	for(int i=0; i<9; i++){
-        do{
-            num = rand() % 9;
-		}while(repeticionDominio(num, arreglo));
-        arreglo[i] = num;
-        cout << arreglo[i] << "  ";
-    }
+	do{
+		for(int i=0; i<9; i++){
+			do{
+				num = rand() % 9;
+			}while(repeticionDominio(num, arreglo));
+			arreglo[i] = num;
+			if(arreglo[i]!=0){
+				arregloAux[j] = arreglo[i];
+				j++;
+			}
+		}
+		j = 0;
+		cout <<"1"<< endl;
+	} while (!existeSolucion(obtenerInversiones(arregloAux)));
+	for (int i = 0; i < 9;i++){
+		cout << arreglo[i] << "  ";
+	}
 	cout << "\n\n";
 }
 
