@@ -205,16 +205,7 @@ int main()
 	{
 		cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto existe solucion.\n"<< endl;
 		cout << "\nResolviendo el puzzle, espere por favor...\n";
-
-		estadoObjetivo[0][0] = 0;
-		estadoObjetivo[0][1] = 1;
-		estadoObjetivo[0][2] = 2;
-		estadoObjetivo[1][0] = 3;
-		estadoObjetivo[1][1] = 4;
-		estadoObjetivo[1][2] = 5;
-		estadoObjetivo[2][0] = 6;
-		estadoObjetivo[2][1] = 7;
-		estadoObjetivo[2][2] = 8;
+		estadoObjetivo = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
 		encontrarSolucion(a, 0);
 	}
 	else
