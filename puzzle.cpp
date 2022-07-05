@@ -3,7 +3,6 @@
 #include <iterator>
 #include <map>
 #include <string>
-//#include <bits/stdc++.h>
 #include <functional>
 #include <utility>
 #include <queue>
@@ -30,14 +29,6 @@ int manhattan(vector<vector<int>> arreglo, int movimientos)
 		{
 			if (arreglo[i][j] != 0)
 			{
-				// for (int k = 0; k < 3; k++){
-				// for (int l = 0; l < 3; l++){
-				// if (arreglo[i][j] == estadoObjetivo[k][l]){
-				//	distancia += abs(i - k) + abs(j - l); // absolute value since it may be negative
-
-				//}
-				//}
-				//}
 				int estadoObjetivo_i = (arreglo[i][j] - 1) / 3;
 				int estadoObjetivo_j = (arreglo[i][j] - 1) % 3;
 				distancia += abs(j - estadoObjetivo_j) + abs(i - estadoObjetivo_i);
@@ -46,25 +37,6 @@ int manhattan(vector<vector<int>> arreglo, int movimientos)
 	}
 	return distancia;
 }
-
-// int manhat(vector<vector<int>> node)
-//{
-//	int sum = 0;
-//	for (int y = 0; y < 3; y++)
-//	{
-//		for (int x = 0; x < 3; x++)
-//		{
-//			int value = node[y][x];
-//			if (value != 0)
-//			{
-//				int estadoObjetivo_x = (value - 1) % 3;
-//				int estadoObjetivo_y = (value - 1) / 3;
-//				sum = sum + abs(x - estadoObjetivo_x) + abs(y - estadoObjetivo_y);
-//			}
-//		}
-//	}
-//	return sum;
-// }
 
 bool isestadoObjetivo(vector<vector<int>> a)
 { // fucion que verifica si ya se encuentra en el estado objetivo
@@ -154,15 +126,6 @@ void print_path(vector<vector<int>> s)
 	return;
 }
 
-// void print(vector<vector<int>> s){
-//	for (int i = 0; i < 3; i++){
-//		for (int j = 0; j < 3; j++){
-//			printf("%d ", s[i][j]);
-//			cout << "valor: [" << i << "][" << j << "]:"<<s[i][j];
-//		}
-//		cout << endl;
-//	}
-// }
 
 void encontrarSolucion(vector<vector<int>> a, int moves)
 {
@@ -209,18 +172,6 @@ int obtenerInversiones(int arr[])
 	}
 	return contador;
 }
-
-// bool existeSolucion(int inversiones)
-//{
-//	if (inversiones % 2 == 0)
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	};
-// }
 
 bool existeSolucion(int inversiones)
 {
