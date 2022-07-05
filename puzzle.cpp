@@ -11,40 +11,43 @@
 
 using namespace std;
 
-map<vector<vector<int>>, bool> visited;				  // declarando un mapa llamado "visitado" que toma vector (que almacena vectores que toman valores enteros) como su clave, y un booleano como su valor
-map<vector<vector<int>>, vector<vector<int>>> parent; // declarando un mapa llamado "padre" que toma vectores como su clave y valor para realizar un seguimiento de los nodos
-vector<vector<int>> goal(3, vector<int>(3));
+map<vector<vector<int>>, bool> visitados;				  // declaring a map named "visitados" that takes vector(which stores vectors that takes integer values) as its key, and a boolean as its value
+map<vector<vector<int>>, vector<vector<int>>> hijos; // declaring a map named "hijos" that takes vectors as its both key and value to keep track of the nodes
+vector<vector<int>> estadoObjetivo(3, vector<int>(3));
 
-
-bool visit(vector<vector<int>> a){ // esta funcion verifica si el nodo ya fue visitado
-	return (visited[a] == true);
+bool visit(vector<vector<int>> a)
+{ // esta funcion verifica si el nodo ya fue visitado
+	return (visitados[a] == true);
 }
 
-
 // Manhattan or A*(A-star) search to find the distance
-int manhattan(vector<vector<int>> arreglo, int movimientos){
+int manhattan(vector<vector<int>> arreglo, int movimientos)
+{
 	int distancia = movimientos;
-	for (int i = 0; i < 3; i++){ // for loop to go through each row and column (like matrices). [00,01,02,10,11,12,20,21,22] We'll be using this i,j loop more.
-		for (int j = 0; j < 3; j++){
-			if (arreglo[i][j] != 0){
-				//for (int k = 0; k < 3; k++){
-					//for (int l = 0; l < 3; l++){
-				//if (arreglo[i][j] == goal[k][l]){
+	for (int i = 0; i < 3; i++)
+	{ // for loop to go through each row and column (like matrices). [00,01,02,10,11,12,20,21,22] We'll be using this i,j loop more.
+		for (int j = 0; j < 3; j++)
+		{
+			if (arreglo[i][j] != 0)
+			{
+				// for (int k = 0; k < 3; k++){
+				// for (int l = 0; l < 3; l++){
+				// if (arreglo[i][j] == estadoObjetivo[k][l]){
 				//	distancia += abs(i - k) + abs(j - l); // absolute value since it may be negative
 
 				//}
-					//}
 				//}
-				int goal_i = (arreglo[i][j] - 1) / 3;
-				int goal_j = (arreglo[i][j] - 1) % 3;
-				distancia += abs(j - goal_j) + abs(i - goal_i);
+				//}
+				int estadoObjetivo_i = (arreglo[i][j] - 1) / 3;
+				int estadoObjetivo_j = (arreglo[i][j] - 1) % 3;
+				distancia += abs(j - estadoObjetivo_j) + abs(i - estadoObjetivo_i);
 			}
 		}
 	}
 	return distancia;
 }
 
-//int manhat(vector<vector<int>> node)
+// int manhat(vector<vector<int>> node)
 //{
 //	int sum = 0;
 //	for (int y = 0; y < 3; y++)
@@ -54,41 +57,47 @@ int manhattan(vector<vector<int>> arreglo, int movimientos){
 //			int value = node[y][x];
 //			if (value != 0)
 //			{
-//				int goal_x = (value - 1) % 3;
-//				int goal_y = (value - 1) / 3;
-//				sum = sum + abs(x - goal_x) + abs(y - goal_y);
+//				int estadoObjetivo_x = (value - 1) % 3;
+//				int estadoObjetivo_y = (value - 1) / 3;
+//				sum = sum + abs(x - estadoObjetivo_x) + abs(y - estadoObjetivo_y);
 //			}
 //		}
 //	}
 //	return sum;
-//}
+// }
 
-bool isGoal(vector<vector<int>> a){ // fucion que verifica si ya se encuentra en el estado objetivo
+bool isestadoObjetivo(vector<vector<int>> a)
+{ // fucion que verifica si ya se encuentra en el estado objetivo
 	return (a[0][0] == 0 && a[0][1] == 1 && a[0][2] == 2 && a[1][0] == 3 && a[1][1] == 4 && a[1][2] == 5 && a[2][0] == 6 && a[2][1] == 7 && a[2][2] == 8);
-	//for (int i = 0; i < 3; i++){
+	// for (int i = 0; i < 3; i++){
 	//	for (int j = 0; j < 3; j++){
-	//		if (a[i][j] != goal[i][j]){
+	//		if (a[i][j] != estadoObjetivo[i][j]){
 	//			return false;
 	//		}
-	//			//return 0; // if our puzzle tiles aren't same with the goal position. For eg. we want a[0][0] = 1, a[0][1] = 2, a[2][2] = 0, etc.
+	//			//return 0; // if our puzzle tiles aren't same with the estadoObjetivo position. For eg. we want a[0][0] = 1, a[0][1] = 2, a[2][2] = 0, etc.
 	//	}
-	//}
+	// }
 
-	//return 1;
+	// return 1;
 }
 
-bool guardar(int i, int j){ // boolean guardar para ver si la matriz es 3x3
+bool guardar(int i, int j)
+{ // boolean guardar para ver si la matriz es 3x3
 	return (i >= 0 && i <= 2 && j >= 0 && j <= 2);
 }
 
 int dx[] = {-1, 1, 0, 0};
 int dy[] = {0, 0, 1, -1};
 
-vector<vector<vector<int>>> vecinos(vector<vector<int>> a){
+vector<vector<vector<int>>> vecinos(vector<vector<int>> a)
+{
 	pair<int, int> pos; // vector de pares denominado "pos" (empareja un entero con otro entero)
-	for (int i = 0; i < 3; i++){
-		for (int j = 0; j < 3; j++){
-			if (a[i][j] == 0){
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (a[i][j] == 0)
+			{
 				pos.first = i;
 				pos.second = j;
 				break;
@@ -97,11 +106,13 @@ vector<vector<vector<int>>> vecinos(vector<vector<int>> a){
 	}
 
 	vector<vector<vector<int>>> resp; // vector de "respuesta" para agregar los valores correctos empujando hacia atrás
-	for (int k = 0; k < 4; k++){
+	for (int k = 0; k < 4; k++)
+	{
 		int cx = pos.first;	 // para tener un seguimiento de los valores "i"
 		int cy = pos.second; // para tener un seguimiento de los valores "j"
 		vector<vector<int>> n = a;
-		if (guardar(cx + dx[k], cy + dy[k])){
+		if (guardar(cx + dx[k], cy + dy[k]))
+		{
 			swap(n[cx + dx[k]][cy + dy[k]], n[cx][cy]); // intercambio de matrices
 			resp.push_back(n);
 		}
@@ -112,23 +123,29 @@ vector<vector<vector<int>>> vecinos(vector<vector<int>> a){
 
 typedef pair<vector<vector<int>>, int> estado; // nuevo tipo definido llamado "estado" que es un vector de pares
 
-struct cmp{
-	bool operator()(estado &a, estado &b){ // overloading the unary operator "()"
+struct cmp
+{
+	bool operator()(estado &a, estado &b)
+	{ // overloading the unary operator "()"
 		int am = manhattan(a.first, a.second);
 		int bm = manhattan(b.first, b.second);
 		return am < bm;
 	}
 };
 
-void print_path(vector<vector<int>> s){
-	if (parent.count(s)){	   // to see if our vector s is present in our map named "parent" which takes vectors in it for both key and value, and if it is present
-		print_path(parent[s]); // then print the path
+void print_path(vector<vector<int>> s)
+{
+	if (hijos.count(s))
+	{						   // to see if our vector s is present in our map named "hijos" which takes vectors in it for both key and value, and if it is present
+		print_path(hijos[s]); // then print the path
 	}
 
-	for (int i = 0; i < 3; i++){
+	for (int i = 0; i < 3; i++)
+	{
 		cout << "| ";
-		for (int j = 0; j < 3; j++){
-			cout <<s[i][j]<<" | ";
+		for (int j = 0; j < 3; j++)
+		{
+			cout << s[i][j] << " | ";
 		}
 		cout << endl;
 	}
@@ -136,7 +153,7 @@ void print_path(vector<vector<int>> s){
 	return;
 }
 
-//void print(vector<vector<int>> s){
+// void print(vector<vector<int>> s){
 //	for (int i = 0; i < 3; i++){
 //		for (int j = 0; j < 3; j++){
 //			printf("%d ", s[i][j]);
@@ -144,38 +161,47 @@ void print_path(vector<vector<int>> s){
 //		}
 //		cout << endl;
 //	}
-//}
+// }
 
-void solve(vector<vector<int>> a, int moves){
+void encontrarSolucion(vector<vector<int>> a, int moves)
+{
 
-	priority_queue<estado, vector<estado>, cmp> Q; // Priority queue named "Q".
-	Q.push(estado(a, moves));
-	while (!Q.empty()){
-		vector<vector<int>> s = Q.top().first;
-		Q.pop();
-		visited[s] = true;
-		if (s == goal){ // print(s)
-			print_path(s);
+	priority_queue<estado, vector<estado>, cmp> colaP; // Priority queue named "Q".
+	colaP.push(estado(a, moves));
+	while (!colaP.empty())
+	{
+		vector<vector<int>> aux = colaP.top().first;
+		colaP.pop();
+		visitados[aux] = true;
+		if (aux == estadoObjetivo)
+		{ // print(s)
+			print_path(aux);
 			break;
 		}
-		vector<vector<vector<int>>> ns = vecinos(s);
+		vector<vector<vector<int>>> ns = vecinos(aux);
 		vector<vector<vector<int>>>::iterator it;
-		for (it = ns.begin(); it != ns.end(); it++){
+		for (it = ns.begin(); it != ns.end(); it++)
+		{
 			vector<vector<int>> temp = *it;
-			if (!visit(temp)){
-				parent.insert(pair<vector<vector<int>>, vector<vector<int>>>(temp, s));
-				Q.push(estado(temp, moves + 1));
+			if (!visit(temp))
+			{
+				hijos.insert(pair<vector<vector<int>>, vector<vector<int>>>(temp, aux));
+				colaP.push(estado(temp, moves + 1));
 			}
 		}
 	}
 	return;
 }
 
-int obtenerInversiones(int arr[]){
+int obtenerInversiones(int arr[])
+{
 	int contador = 0;
-	for (int i = 0; i < 7; i++){
-		for (int j = i + 1; j < 8; j++){
-			if (arr[j] && arr[i] && arr[i] > arr[j]){
+	for (int i = 0; i < 7; i++)
+	{
+		for (int j = i + 1; j < 8; j++)
+		{
+			if (arr[j] && arr[i] && arr[i] > arr[j])
+			{
 				contador++;
 			}
 		}
@@ -183,7 +209,7 @@ int obtenerInversiones(int arr[]){
 	return contador;
 }
 
-//bool existeSolucion(int inversiones)
+// bool existeSolucion(int inversiones)
 //{
 //	if (inversiones % 2 == 0)
 //	{
@@ -193,9 +219,10 @@ int obtenerInversiones(int arr[]){
 //	{
 //		return false;
 //	};
-//}
+// }
 
-bool existeSolucion(int inversiones){
+bool existeSolucion(int inversiones)
+{
 	return (inversiones % 2 == 0);
 }
 
@@ -220,34 +247,28 @@ int main()
 		}
 	}
 
-	/*for (int i = 0; i < 8; i++)
-	{
-		cout << arregloAux[i] << " ";
-	}*/
-
 	cout << endl;
-	if (existeSolucion(obtenerInversiones(arregloAux)) == 1)
+	
+	if (existeSolucion(obtenerInversiones(arregloAux)))
 	{
-		cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto existe solucion.\n"
-			 << endl;
+		cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto existe solucion.\n"<< endl;
+		cout << "\nResolviendo el puzzle, espere por favor...\n";
+
+		estadoObjetivo[0][0] = 0;
+		estadoObjetivo[0][1] = 1;
+		estadoObjetivo[0][2] = 2;
+		estadoObjetivo[1][0] = 3;
+		estadoObjetivo[1][1] = 4;
+		estadoObjetivo[1][2] = 5;
+		estadoObjetivo[2][0] = 6;
+		estadoObjetivo[2][1] = 7;
+		estadoObjetivo[2][2] = 8;
+		encontrarSolucion(a, 0);
 	}
 	else
 	{
-		cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto no existe solucion.\n"
-			 << endl;
+		cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto no existe solucion.\n"<< endl;
 	};
-
-	cout << "\nResolviendo el puzzle, espere por favor...\n";
-	goal[0][0] = 0;
-	goal[0][1] = 1;
-	goal[0][2] = 2;
-	goal[1][0] = 3;
-	goal[1][1] = 4;
-	goal[1][2] = 5;
-	goal[2][0] = 6;
-	goal[2][1] = 7;
-	goal[2][2] = 8;
-	solve(a, 0);
 
 	return 0;
 }
