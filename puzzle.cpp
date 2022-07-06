@@ -161,46 +161,37 @@ bool repeticionDominio(int num, int arreglo[]){
     return false;
 }
 
-void ejemplosPuzzle(){
+int *ejemplosPuzzle(int arreglo[]){
 	srand(time(NULL));
-    int num, arreglo[9], arregloAux[8],j=0;
-	cout << endl<< "Ejemplo: ";
-	do{
-		for(int i=0; i<9; i++){
-			do{
-				num = rand() % 9;
-			}while(repeticionDominio(num, arreglo));
-			arreglo[i] = num;
-			if(arreglo[i]!=0){
-				arregloAux[j] = arreglo[i];
-				j++;
-			}
-		}
-		j = 0;
-	} while (!existeSolucion(obtenerInversiones(arregloAux)));
-	for (int i = 0; i < 9;i++){
-		cout << arreglo[i] << "  ";
+    int num;
+	for(int i=0; i<9; i++){
+		do{
+			num = rand() % 9;
+		}while(repeticionDominio(num, arreglo));
+		arreglo[i] = num;
 	}
-	cout << "\n\n";
+	return arreglo;
 }
 
-
-// esta de mejorar el de ejemplosPuzzle
-int main()
-{
-
-	int arregloAux[8];
-	int k = 0;
+int main(){
+    int  arreglo[9],arregloAux[8],k=0,w=0;
+	int *arregloEstados = ejemplosPuzzle(arreglo);
 	cout << "Por favor ingresa tu 8 Puzzle como una cadena! \n";
-	ejemplosPuzzle();
 	vector<vector<int>> estadoInicial(3, vector<int>(3));
 	for (int i = 0; i < 3; i++){
 		for (int j = 0; j < 3; j++){
-			cin >> estadoInicial[i][j];
+			estadoInicial[i][j] = arregloEstados[w];
+			w++;
 			if (estadoInicial[i][j] != 0){
 				arregloAux[k] = estadoInicial[i][j];
 				k++;
 			}
+		}
+	}
+	cout << endl<< "Estado Inicial: ";
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 3; j++){
+			cout<<estadoInicial[i][j]<<"  ";
 		}
 	}
 
@@ -211,6 +202,7 @@ int main()
 				 << endl;
 			cout << "\nResolviendo el puzzle, espere por favor...\n";
 			estadoObjetivo = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+			cout << endl;
 			encontrarSolucion(estadoInicial, 0);
 	}else{
 		cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto no existe solucion.\n"<< endl;
