@@ -11,18 +11,18 @@
 
 using namespace std;
 
-map<vector<vector<int>>, bool> visitados;				  // declaring a map named "visitados" that takes vector(which stores vectors that takes integer values) as its key, and a boolean as its value
-map<vector<vector<int>>, vector<vector<int>>> hijos; // declaring a map named "hijos" that takes vectors as its both key and value to keep track of the nodes
+map<vector<vector<int>>, bool> visitados;				  // ddeclarando un mapa llamado "visitados" que toma vector (que almacena vectores que toman valores enteros) como su clave, y un booleano como su valor
+map<vector<vector<int>>, vector<vector<int>>> hijos; //declarando un mapa llamado "hijos" que toma vectores como su clave y valor para realizar un seguimiento de los nodos
 vector<vector<int>> estadoObjetivo(3, vector<int>(3));
 
 bool visit(vector<vector<int>> a){ // esta funcion verifica si el nodo ya fue visitado
 	return (visitados[a] == true);
 }
 
-// Manhattan or A*(A-star) search to find the distance
+// Manhattan o A*(A-star) buscar para encontrar la distancia
 int manhattan(vector<vector<int>> arreglo, int movimientos){
 	int distancia = movimientos;
-	for (int i = 0; i < 3; i++){ // for loop to go through each row and column (like matrices). [00,01,02,10,11,12,20,21,22] We'll be using this i,j loop more.
+	for (int i = 0; i < 3; i++){ // for loop para pasar por cada fila y columna (como matrices). [00,01,02,10,11,12,20,21,22] Usaremos más este bucle i,j.
 		for (int j = 0; j < 3; j++){
 			if (arreglo[i][j] != 0){
 				int estadoObjetivo_i = (arreglo[i][j] - 1) / 3;
@@ -36,17 +36,6 @@ int manhattan(vector<vector<int>> arreglo, int movimientos){
 
 bool estadoObjetivoAlcanzado(vector<vector<int>> a){ // fucion que verifica si ya se encuentra en el estado objetivo
 	return (a == estadoObjetivo);
-	//return (a[0][0] == 0 && a[0][1] == 1 && a[0][2] == 2 && a[1][0] == 3 && a[1][1] == 4 && a[1][2] == 5 && a[2][0] == 6 && a[2][1] == 7 && a[2][2] == 8);
-	// for (int i = 0; i < 3; i++){
-	//	for (int j = 0; j < 3; j++){
-	//		if (a[i][j] != estadoObjetivo[i][j]){
-	//			return false;
-	//		}
-	//			//return 0; // if our puzzle tiles aren't same with the estadoObjetivo position. For eg. we want a[0][0] = 1, a[0][1] = 2, a[2][2] = 0, etc.
-	//	}
-	// }
-
-	// return 1;
 }
 
 bool guardar(int i, int j){ // boolean guardar para ver si la matriz es 3x3
@@ -84,19 +73,17 @@ vector<vector<vector<int>>> vecinos(vector<vector<int>> a){
 
 typedef pair<vector<vector<int>>, int> estado; // nuevo tipo definido llamado "estado" que es un vector de pares
 
-struct cmp
-{
-	bool operator()(estado &a, estado &b)
-	{ // overloading the unary operator "()"
+struct cmp{
+	bool operator()(estado &a, estado &b){ // sobrecargando el operador unario "()"
 		int am = manhattan(a.first, a.second);
 		int bm = manhattan(b.first, b.second);
 		return am < bm;
 	}
 };
 
-void print_path(vector<vector<int>> s){
-	if (hijos.count(s)){	   // to see if our vector s is present in our map named "hijos" which takes vectors in it for both key and value, and if it is present
-		print_path(hijos[s]); // then print the path
+void printMovimientos(vector<vector<int>> s){
+	if (hijos.count(s)){	   // para ver si nuestro vector s está presente en nuestro mapa llamado "hijos" que toma vectores tanto para clave como para valor, y si está presente
+		printMovimientos(hijos[s]); // luego imprima la ruta
 	}
 
 	for (int i = 0; i < 3; i++){
@@ -120,7 +107,7 @@ void encontrarSolucion(vector<vector<int>> a, int moves){
 		colaP.pop();
 		visitados[aux] = true;
 		if (aux == estadoObjetivo){ // print(s)
-			print_path(aux);
+			printMovimientos(aux);
 			break;
 		}
 		vector<vector<vector<int>>> ns = vecinos(aux);
