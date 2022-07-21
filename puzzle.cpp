@@ -78,9 +78,9 @@ struct cmp{
 	}
 };
 
-void printMovimientos(vector<vector<int>> s){
+void estadosPrint(vector<vector<int>> s){
 	if (hijos.count(s)){	   // para ver si nuestro vector s está presente en nuestro mapa llamado "hijos" que toma vectores tanto para clave como para valor, y si está presente
-		printMovimientos(hijos[s]); // luego imprima la ruta
+		estadosPrint(hijos[s]); // luego imprima la ruta
 	}
 
 	for (int i = 0; i < 3; i++){
@@ -112,7 +112,7 @@ void encontrarSolucion(vector<vector<int>> a, int moves){
 		//if (aux == estadoObjetivo){ // print(s)
 		if (estadoObjetivoAlcanzado(aux)){ // print(s)
 			cout << endl;
-			printMovimientos(aux);
+			estadosPrint(aux);
 			break;
 		}
 		vector<vector<vector<int>>> ns = vecinos(aux);
@@ -181,7 +181,7 @@ int main(){
 		}
 	}
 	cout << endl<< "Estado Inicial: "<<endl;
-	printMovimientos(estadoInicial);
+	estadosPrint(estadoInicial);
 
 	if(manhattan(estadoInicial,0)<=10){
 		cout << "El valor heuristico es de " << manhattan(estadoInicial, 0)<<endl;
