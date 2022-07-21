@@ -16,9 +16,7 @@ map<vector<vector<int>>, bool> visitados;				  // ddeclarando un mapa llamado "v
 map<vector<vector<int>>, vector<vector<int>>> hijos; //declarando un mapa llamado "hijos" que toma vectores como su clave y valor para realizar un seguimiento de los nodos
 vector<vector<int>> estadoObjetivo(3, vector<int>(3));
 int distancia;
-
-
-
+vector<int> valoresNOdos;
 
 // Manhattan o A*(A-star) buscar para encontrar la distancia
 int manhattan(vector<vector<int>> arreglo, int movimientos){
@@ -29,11 +27,15 @@ int manhattan(vector<vector<int>> arreglo, int movimientos){
 				int fila = (arreglo[i][j] - 1) / 3;
 				int columna = (arreglo[i][j] - 1) % 3;
 				distancia += abs(j - columna) + abs(i - fila);
+				if(valoresNOdos.size()<8){
+					valoresNOdos.push_back(abs(j - columna) + abs(i - fila));
+				}
 			}
 		}
 	}
 	return distancia;
 }
+
 
 bool guardar(int i, int j){ // boolean guardar para ver si la matriz es 3x3
 	return (i >= 0 && i <= 2 && j >= 0 && j <= 2);
@@ -183,7 +185,7 @@ int main(){
 	cout << endl<< "Estado Inicial: "<<endl;
 	estadosPrint(estadoInicial);
 
-	if(manhattan(estadoInicial,0)<=10){
+	if(manhattan(estadoInicial,0)<=15){
 		cout << "El valor heuristico es de " << manhattan(estadoInicial, 0)<<endl;
 		if (existeSolucion(obtenerInversiones(arregloAux))){
 			cout<< "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto existe solucion.\n"<< endl;
@@ -191,7 +193,12 @@ int main(){
 			estadoObjetivo = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
 			cout << endl;
 			encontrarSolucion(estadoInicial, 0);
-			cout<<"Distancia Manttan "<<manhattan(estadoInicial,0);
+			cout<<"Distancia Manttan: "<<manhattan(estadoInicial,0);
+			cout << endl;
+			cout << "Costo de cada nodo: ";
+			for (int idx : valoresNOdos){
+				cout << idx << " ";
+			}
 		}else{
 			cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto no existe solucion.\n"<< endl;
 		};
