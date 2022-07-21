@@ -16,17 +16,9 @@ map<vector<vector<int>>, bool> visitados;				  // ddeclarando un mapa llamado "v
 map<vector<vector<int>>, vector<vector<int>>> hijos; //declarando un mapa llamado "hijos" que toma vectores como su clave y valor para realizar un seguimiento de los nodos
 vector<vector<int>> estadoObjetivo(3, vector<int>(3));
 int distancia;
-vector<int> arrayDist;
 
-bool visit(vector<vector<int>> a){ // esta funcion verifica si el nodo ya fue visitado
-	return (visitados[a] == true);
-}
 
-void distanciaManhattan(){
-    if(arrayDist.size()<5  ){
-		arrayDist.push_back(distancia);
-	}
-}
+
 
 // Manhattan o A*(A-star) buscar para encontrar la distancia
 int manhattan(vector<vector<int>> arreglo, int movimientos){
@@ -41,23 +33,6 @@ int manhattan(vector<vector<int>> arreglo, int movimientos){
 		}
 	}
 	return distancia;
-}
-int manhattanValorExacto(vector<vector<int>> arreglo){
-	int movimientos =0;
-	for (int i = 0; i < 3; i++){ // for loop para pasar por cada fila y columna (como matrices). [00,01,02,10,11,12,20,21,22] Usaremos más este bucle i,j.
-		for (int j = 0; j < 3; j++){
-			if (arreglo[i][j] != 0){ //No se cuenta a la ficha 0, que representa a la ficha vacía
-				int fila = (arreglo[i][j] - 1) / 3;
-				int columna = (arreglo[i][j] - 1) % 3;
-				movimientos += abs(j - columna) + abs(i - fila);
-			}
-		}
-	}
-	return movimientos;
-}
-
-bool estadoObjetivoAlcanzado(vector<vector<int>> a){ // fucion que verifica si ya se encuentra en el estado objetivo
-	return (a == estadoObjetivo);
 }
 
 bool guardar(int i, int j){ // boolean guardar para ver si la matriz es 3x3
@@ -119,6 +94,12 @@ void printMovimientos(vector<vector<int>> s){
 	return;
 }
 
+bool estadoObjetivoAlcanzado(vector<vector<int>> a){ // fucion que verifica si ya se encuentra en el estado objetivo
+	return (a == estadoObjetivo);
+}
+bool visit(vector<vector<int>> a){ // esta funcion verifica si el nodo ya fue visitado
+	return (visitados[a] == true);
+}
 
 void encontrarSolucion(vector<vector<int>> a, int moves){
 
@@ -128,7 +109,8 @@ void encontrarSolucion(vector<vector<int>> a, int moves){
 		vector<vector<int>> aux = colaP.top().first;
 		colaP.pop();
 		visitados[aux] = true;
-		if (aux == estadoObjetivo){ // print(s)
+		//if (aux == estadoObjetivo){ // print(s)
+		if (estadoObjetivoAlcanzado(aux)){ // print(s)
 			cout << endl;
 			printMovimientos(aux);
 			break;
@@ -184,7 +166,8 @@ int *ejemplosPuzzle(int arreglo[]){
 }
 
 int main(){
-    int  arreglo[9],arregloAux[8],k=0,w=0;
+	
+	int  arreglo[9],arregloAux[8],k=0,w=0;
 	int *arregloEstados = ejemplosPuzzle(arreglo);
 	vector<vector<int>> estadoInicial(3, vector<int>(3));
 	for (int i = 0; i < 3; i++){
