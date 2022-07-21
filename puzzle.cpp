@@ -8,30 +8,52 @@
 #include <queue>
 #include <iterator>
 #include <utility>
+#include<algorithm>
 
 using namespace std;
 
 map<vector<vector<int>>, bool> visitados;				  // ddeclarando un mapa llamado "visitados" que toma vector (que almacena vectores que toman valores enteros) como su clave, y un booleano como su valor
 map<vector<vector<int>>, vector<vector<int>>> hijos; //declarando un mapa llamado "hijos" que toma vectores como su clave y valor para realizar un seguimiento de los nodos
 vector<vector<int>> estadoObjetivo(3, vector<int>(3));
+int distancia;
+vector<int> arrayDist;
 
 bool visit(vector<vector<int>> a){ // esta funcion verifica si el nodo ya fue visitado
 	return (visitados[a] == true);
 }
 
+void distanciaManhattan(){
+    if(arrayDist.size()<5  ){
+		arrayDist.push_back(distancia);
+	}
+}
+
 // Manhattan o A*(A-star) buscar para encontrar la distancia
 int manhattan(vector<vector<int>> arreglo, int movimientos){
-	int distancia = movimientos;
+	distancia = movimientos;
 	for (int i = 0; i < 3; i++){ // for loop para pasar por cada fila y columna (como matrices). [00,01,02,10,11,12,20,21,22] Usaremos más este bucle i,j.
 		for (int j = 0; j < 3; j++){
-			if (arreglo[i][j] != 0){
-				int estadoObjetivo_i = (arreglo[i][j] - 1) / 3;
-				int estadoObjetivo_j = (arreglo[i][j] - 1) % 3;
-				distancia += abs(j - estadoObjetivo_j) + abs(i - estadoObjetivo_i);
+			if (arreglo[i][j] != 0){ //No se cuenta a la ficha 0, que representa a la ficha vacía
+				int fila = (arreglo[i][j] - 1) / 3;
+				int columna = (arreglo[i][j] - 1) % 3;
+				distancia += abs(j - columna) + abs(i - fila);
 			}
 		}
 	}
 	return distancia;
+}
+int manhattanValorExacto(vector<vector<int>> arreglo){
+	int movimientos =0;
+	for (int i = 0; i < 3; i++){ // for loop para pasar por cada fila y columna (como matrices). [00,01,02,10,11,12,20,21,22] Usaremos más este bucle i,j.
+		for (int j = 0; j < 3; j++){
+			if (arreglo[i][j] != 0){ //No se cuenta a la ficha 0, que representa a la ficha vacía
+				int fila = (arreglo[i][j] - 1) / 3;
+				int columna = (arreglo[i][j] - 1) % 3;
+				movimientos += abs(j - columna) + abs(i - fila);
+			}
+		}
+	}
+	return movimientos;
 }
 
 bool estadoObjetivoAlcanzado(vector<vector<int>> a){ // fucion que verifica si ya se encuentra en el estado objetivo
@@ -100,13 +122,14 @@ void printMovimientos(vector<vector<int>> s){
 
 void encontrarSolucion(vector<vector<int>> a, int moves){
 
-	priority_queue<estado, vector<estado>, cmp> colaP; // Priority queue named "Q".
+	priority_queue<estado, vector<estado>, cmp> colaP; // cola de prioridades donde el primer elemento es el mayor
 	colaP.push(estado(a, moves));
 	while (!colaP.empty()){
 		vector<vector<int>> aux = colaP.top().first;
 		colaP.pop();
 		visitados[aux] = true;
 		if (aux == estadoObjetivo){ // print(s)
+			cout << endl;
 			printMovimientos(aux);
 			break;
 		}
@@ -163,7 +186,6 @@ int *ejemplosPuzzle(int arreglo[]){
 int main(){
     int  arreglo[9],arregloAux[8],k=0,w=0;
 	int *arregloEstados = ejemplosPuzzle(arreglo);
-	cout << "Por favor ingresa tu 8 Puzzle como una cadena! \n";
 	vector<vector<int>> estadoInicial(3, vector<int>(3));
 	for (int i = 0; i < 3; i++){
 		for (int j = 0; j < 3; j++){
@@ -175,25 +197,23 @@ int main(){
 			}
 		}
 	}
-	cout << endl<< "Estado Inicial: ";
-	for (int i = 0; i < 3; i++){
-		for (int j = 0; j < 3; j++){
-			cout<<estadoInicial[i][j]<<"  ";
-		}
-	}
+	cout << endl<< "Estado Inicial: "<<endl;
+	printMovimientos(estadoInicial);
 
-	cout << endl;
-
-	if (existeSolucion(obtenerInversiones(arregloAux))){
-			cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto existe solucion.\n"
-				 << endl;
+	if(manhattan(estadoInicial,0)<=10){
+		cout << "El valor heuristico es de " << manhattan(estadoInicial, 0)<<endl;
+		if (existeSolucion(obtenerInversiones(arregloAux))){
+			cout<< "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto existe solucion.\n"<< endl;
 			cout << "\nResolviendo el puzzle, espere por favor...\n";
 			estadoObjetivo = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
 			cout << endl;
 			encontrarSolucion(estadoInicial, 0);
+			cout<<"Distancia Manttan "<<manhattan(estadoInicial,0);
+		}else{
+			cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto no existe solucion.\n"<< endl;
+		};
 	}else{
-		cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto no existe solucion.\n"<< endl;
-	};
-
+		cout << "El costo heuristico es "<<manhattan(estadoInicial,0) <<", por lo tanto es mayor a 10";
+	}	
 	return 0;
 }
