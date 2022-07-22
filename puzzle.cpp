@@ -253,8 +253,11 @@ int main()
 	estadosPrint(estadoInicial);
 	int distanciaManhattan = manhattan(estadoInicial,0);
 
-	if (manhattan(estadoInicial, 0) <= 10)
-	{
+	if (manhattan(estadoInicial, 0) <= 10){
+		if(distanciaManhattan == 0){
+			cout << "g(n)=0 : h(n)=0 : f(n)=0";
+			return 0;
+		}
 		cout << "El valor heuristico es de " << distanciaManhattan << endl;
 		if (existeSolucion(obtenerInversiones(arregloAux)))
 		{

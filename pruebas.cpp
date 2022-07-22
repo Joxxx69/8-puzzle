@@ -235,12 +235,14 @@ int main()
 	int arreglo[9], arregloAux[8], k = 0, w = 0;
 	int *arregloEstados = ejemplosPuzzle(arreglo);
 	vector<vector<int>> estadoInicial(3, vector<int>(3));
+	estadoInicial = {{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
+
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			estadoInicial[i][j] = arregloEstados[w];
-			w++;
+			//estadoInicial[i][j] = arregloEstados[w];
+			//w++;
 			if (estadoInicial[i][j] != 0)
 			{
 				arregloAux[k] = estadoInicial[i][j];
@@ -248,13 +250,18 @@ int main()
 			}
 		}
 	}
+
 	cout << endl
 		 << "Estado Inicial: " << endl;
 	estadosPrint(estadoInicial);
 	int distanciaManhattan = manhattan(estadoInicial,0);
-
+	
 	if (manhattan(estadoInicial, 0) <= 10)
 	{
+		if(distanciaManhattan == 0){
+			cout << "solucion";
+			return 0;
+		}
 		cout << "El valor heuristico es de " << distanciaManhattan << endl;
 		if (existeSolucion(obtenerInversiones(arregloAux)))
 		{
