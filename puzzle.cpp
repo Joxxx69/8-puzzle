@@ -23,35 +23,39 @@ vector<int> valoresNOdos;
 int manhattan(vector<vector<int>> arreglo, int movimientos)
 {
 	distancia = movimientos;
-	for (int i = 0; i < 3; i++){ // for loop para pasar por cada fila y columna (como matrices). [00,01,02,10,11,12,20,21,22] Usaremos más este bucle i,j.
-		for (int j = 0; j < 3; j++){
-			if (arreglo[i][j] != 0){ // No se cuenta a la ficha 0, que representa a la ficha vacía
+	for (int i = 0; i < 3; i++)
+	{ // for loop para pasar por cada fila y columna (como matrices). [00,01,02,10,11,12,20,21,22] Usaremos más este bucle i,j.
+		for (int j = 0; j < 3; j++)
+		{
+			if (arreglo[i][j] != 0)
+			{ // No se cuenta a la ficha 0, que representa a la ficha vacía
 				/*
 				 *La función de Manhattan es igual a |xf-x0| + |yf-y0|. Donde xf representa a la columna donde se debe encontrar el
-                 *valor consultado, yf a la fila donde se debe encontrar el valor. x0 y y0 son las coordenadas [columna][fila] donde se
-                 *encuentra el valor actual.
-                 *
-                 *Como se está utilizando una vector de vectores, el cual es dinamico y tiene una dimension de n*n --> cuadrada.
-                 *Esto se puede solucionar al saber que, una posición t se puede dividir en componentes de filas y columnas de acuerdo a:
-                 *
-                 *  fila = t / numero_total_columnas (entero).   columna =  t % número_total_columnas(entero).
-                 *                 *
-                 *Por cómo está estructurada la resolución del problema, el valor t correspondiente al número ficha de la posicion de la matriz restado 1
-                 *así que con ello, se obtendrá la posición esperada, con respecto a su valor de ficha.
-                 *
-                 *  Ejemplo: Ficha 1 está en posición 3 del arreglo fichas[]. La posición 3 será igual a: fila = (arreglo[i][j]-1)/3 = 1.
-                 *                                                                                        columna = (arreglo[i][j]) MOD 3 = 0.
-                 *                                                            Posición 3 de la matriz corresponde a (1; 0) de una matriz.
-                 *
-                 *  Ahora Ficha 1 debería estar en t = 1. Así que, la posición esperada es: fila = (arreglo[i][j]-1)/3 = 1.
-                 *                                                                          columna = (arreglo[i][j]) MOD 3 = 1.
-                 *																Posición esperada de t = 1: (1; 1).
-                 *
-                 */
+				 *valor consultado, yf a la fila donde se debe encontrar el valor. x0 y y0 son las coordenadas [columna][fila] donde se
+				 *encuentra el valor actual.
+				 *
+				 *Como se está utilizando una vector de vectores, el cual es dinamico y tiene una dimension de n*n --> cuadrada.
+				 *Esto se puede solucionar al saber que, una posición t se puede dividir en componentes de filas y columnas de acuerdo a:
+				 *
+				 *  fila = t / numero_total_columnas (entero).   columna =  t % número_total_columnas(entero).
+				 *                 *
+				 *Por cómo está estructurada la resolución del problema, el valor t correspondiente al número ficha de la posicion de la matriz restado 1
+				 *así que con ello, se obtendrá la posición esperada, con respecto a su valor de ficha.
+				 *
+				 *  Ejemplo: Ficha 1 está en posición 3 del arreglo fichas[]. La posición 3 será igual a: fila = (arreglo[i][j]-1)/3 = 1.
+				 *                                                                                        columna = (arreglo[i][j]) MOD 3 = 0.
+				 *                                                            Posición 3 de la matriz corresponde a (1; 0) de una matriz.
+				 *
+				 *  Ahora Ficha 1 debería estar en t = 1. Así que, la posición esperada es: fila = (arreglo[i][j]-1)/3 = 1.
+				 *                                                                          columna = (arreglo[i][j]) MOD 3 = 1.
+				 *																Posición esperada de t = 1: (1; 1).
+				 *
+				 */
 				int fila = (arreglo[i][j] - 1) / 3;
 				int columna = (arreglo[i][j] - 1) % 3;
 				distancia += abs(j - columna) + abs(i - fila);
-				if (valoresNOdos.size() < 8){
+				if (valoresNOdos.size() < 8)
+				{
 					valoresNOdos.push_back(abs(j - columna) + abs(i - fila));
 				}
 			}
@@ -64,9 +68,9 @@ bool guardar(int i, int j)
 { // boolean guardar para ver si la matriz es 3x3
 	return (i >= 0 && i <= 2 && j >= 0 && j <= 2);
 }
-//Lista de las posibles acciones con las posiciones matriciales 
-int dx[] = {-1, 1, 0, 0};// filas 
-int dy[] = {0, 0, 1, -1};// columnas
+// Lista de las posibles acciones con las posiciones matriciales
+int dx[] = {-1, 1, 0, 0}; // filas
+int dy[] = {0, 0, 1, -1}; // columnas
 
 vector<vector<vector<int>>> vecinos(vector<vector<int>> a)
 {
@@ -100,13 +104,12 @@ vector<vector<vector<int>>> vecinos(vector<vector<int>> a)
 	return resp; // vector resultado o respuesta
 }
 
-
 void estadosPrint(vector<vector<int>> s)
 {
 	if (hijos.count(s))
 	{							// para ver si nuestro vector s está presente en nuestro mapa llamado "hijos" que toma vectores tanto para clave como para valor, y si está presente
 		estadosPrint(hijos[s]); // luego imprima la ruta
-		profundidad++;
+		profundidad++;			// aumento de contador para la profundidad
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -132,21 +135,21 @@ bool visit(vector<vector<int>> a)
 }
 typedef pair<vector<vector<int>>, int> estado; // nuevo tipo definido llamado "estado" que es un vector de pares
 
-
 /* Un predicado binario que toma dos elementos (de tipoT) como argumentos y devuelve un bool.
 La expresión comp(a,b), donde comp es un objeto de este tipo y a y b son elementos del contenedor,
-devolverá true si se considera que a va antes de b en el estricto ordenamiento débil que define la 
-función.los prioridad_cola utiliza esta función para mantener los elementos ordenados de una manera 
-que conserva las propiedades del montón (es decir, que el elemento extraído sea el último de acuerdo 
+devolverá true si se considera que a va antes de b en el estricto ordenamiento débil que define la
+función.los prioridad_cola utiliza esta función para mantener los elementos ordenados de una manera
+que conserva las propiedades del montón (es decir, que el elemento extraído sea el último de acuerdo
 con este estricto ordenamiento débil ). */
-struct comparador{  // este elem
-	bool operator()(estado &a, estado &b){ // sobrecargando el operador unario "()"
+struct comparador
+{ // este elem
+	bool operator()(estado &a, estado &b)
+	{ // sobrecargando el operador unario "()"
 		int am = manhattan(a.first, a.second);
 		int bm = manhattan(b.first, b.second);
 		return am < bm;
 	}
 };
-
 
 void encontrarSolucion(vector<vector<int>> a, int moves)
 {
@@ -179,7 +182,7 @@ void encontrarSolucion(vector<vector<int>> a, int moves)
 	}
 	return;
 }
-
+// Método Inversiones para conocer si el puzzle es resoluble
 int obtenerInversiones(int arr[])
 {
 	int contador = 0;
@@ -212,7 +215,7 @@ bool repeticionDominio(int num, int arreglo[])
 	}
 	return false;
 }
-
+// Generador de estados iniciales del 8 puzzle aleatorios
 int *ejemplosPuzzle(int arreglo[])
 {
 	srand(time(NULL));
@@ -232,7 +235,7 @@ int main()
 {
 
 	int arreglo[9], arregloAux[8], k = 0, w = 0;
-	int *arregloEstados = ejemplosPuzzle(arreglo);
+	int *arregloEstados = ejemplosPuzzle(arreglo); // generacion aleatorio del puzzle
 	vector<vector<int>> estadoInicial(3, vector<int>(3));
 	for (int i = 0; i < 3; i++)
 	{
@@ -250,7 +253,7 @@ int main()
 	cout << endl
 		 << "Estado Inicial: " << endl;
 	estadosPrint(estadoInicial);
-	int distanciaManhattan = manhattan(estadoInicial,0);
+	int distanciaManhattan = manhattan(estadoInicial, 0);
 
 	if (manhattan(estadoInicial, 0) <= 15)
 	{
