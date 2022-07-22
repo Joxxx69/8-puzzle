@@ -253,7 +253,7 @@ int main()
 	estadosPrint(estadoInicial);
 	int distanciaManhattan = manhattan(estadoInicial,0);
 
-	if (manhattan(estadoInicial, 0) <= 10){
+	if (distanciaManhattan <= 10){
 		if(distanciaManhattan == 0){
 			cout << "g(n)=0 : h(n)=0 : f(n)=0";
 			return 0;
@@ -285,7 +285,7 @@ int main()
 	}
 	else
 	{
-		cout << "El costo heuristico es " << manhattan(estadoInicial, 0) << ", por lo tanto es mayor a 10";
+		cout << "El costo heuristico es " << distanciaManhattan<< ", por lo tanto es mayor a 10";
 	}
 	return 0;
 }
