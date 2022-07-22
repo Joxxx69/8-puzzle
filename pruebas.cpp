@@ -41,8 +41,11 @@ bool guardar(int i, int j){ // boolean guardar para ver si la matriz es 3x3
 	return (i >= 0 && i <= 2 && j >= 0 && j <= 2);
 }
 
-int dx[] = {-1, 1, 0, 0};
-int dy[] = {0, 0, 1, -1};
+//Lista de las posibles acciones con las posiciones matriciales 
+int dx[] = {-1, 1, 0, 0}; // filas
+int dy[] = {0, 0, 1, -1}; // columnas
+
+
 
 vector<vector<vector<int>>> vecinos(vector<vector<int>> a){
 	pair<int, int> pos; // vector de pares denominado "pos" (empareja un entero con otro entero)
@@ -70,15 +73,7 @@ vector<vector<vector<int>>> vecinos(vector<vector<int>> a){
 	return resp; // vector resultado o respuesta
 }
 
-typedef pair<vector<vector<int>>, int> estado; // nuevo tipo definido llamado "estado" que es un vector de pares
 
-struct cmp{
-	bool operator()(estado &a, estado &b){ // sobrecargando el operador unario "()"
-		int am = manhattan(a.first, a.second);
-		int bm = manhattan(b.first, b.second);
-		return am < bm;
-	}
-};
 
 void estadosPrint(vector<vector<int>> s){
 	if (hijos.count(s)){	   // para ver si nuestro vector s está presente en nuestro mapa llamado "hijos" que toma vectores tanto para clave como para valor, y si está presente
@@ -103,9 +98,20 @@ bool visit(vector<vector<int>> a){ // esta funcion verifica si el nodo ya fue vi
 	return (visitados[a] == true);
 }
 
+typedef pair<vector<vector<int>>, int> estado; // nuevo tipo definido llamado "estado" que es un vector de pares
+
+struct comparador{  // devuelve verdadero si el primer argumento esta antes que su segundo argumento
+	bool operator()(estado &a, estado &b){ 
+		int am = manhattan(a.first, a.second);
+		int bm = manhattan(b.first, b.second);
+		return am < bm;
+	}
+};
+
+
 void encontrarSolucion(vector<vector<int>> a, int moves){
 
-	priority_queue<estado, vector<estado>, cmp> colaP; // cola de prioridades donde el primer elemento es el mayor
+	priority_queue<estado, vector<estado>, comparador > colaP; // cola de prioridades donde el primer elemento es el menor
 	colaP.push(estado(a, moves));
 	while (!colaP.empty()){
 		vector<vector<int>> aux = colaP.top().first;
@@ -196,9 +202,9 @@ int main(){
 			cout<<"Distancia Manttan: "<<manhattan(estadoInicial,0);
 			cout << endl;
 			cout << "Costo de cada nodo: ";
-			for (int idx : valoresNOdos){
-				cout << idx << " ";
-			}
+			for (int idx : valoresNOdos){cout << idx << " ";}
+			cout << endl;
+
 		}else{
 			cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto no existe solucion.\n"<< endl;
 		};
