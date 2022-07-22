@@ -250,10 +250,11 @@ int main()
 	cout << endl
 		 << "Estado Inicial: " << endl;
 	estadosPrint(estadoInicial);
+	int distanciaManhattan = manhattan(estadoInicial,0);
 
 	if (manhattan(estadoInicial, 0) <= 15)
 	{
-		cout << "El valor heuristico es de " << manhattan(estadoInicial, 0) << endl;
+		cout << "El valor heuristico es de " << distanciaManhattan << endl;
 		if (existeSolucion(obtenerInversiones(arregloAux)))
 		{
 			cout << "Numero de inversiones: " << obtenerInversiones(arregloAux) << ", por lo tanto existe solucion.\n"
@@ -262,7 +263,7 @@ int main()
 			estadoObjetivo = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
 			cout << endl;
 			encontrarSolucion(estadoInicial, 0);
-			cout << "Distancia Manhattan: " << manhattan(estadoInicial, 0);
+			cout << "Distancia Manhattan: " << distanciaManhattan;
 			cout << endl;
 			cout << "Costo de cada nodo: ";
 			for (int idx : valoresNOdos)
