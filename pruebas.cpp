@@ -109,8 +109,8 @@ void estadosPrint(vector<vector<int>> s){
 		estadosPrint(hijos[s]); // luego imprima la ruta
 		int heuristicaEstado = (estadoObjetivoAlcanzado(s)) ? 0 : manhattan(s,0) ;
 		profundidad++;
-		cout << "g(n): " << profundidad<<" ";
-		cout << "h(n): " << heuristicaEstado<<endl;
+		cout << "g(n): " << profundidad<<" : ";
+		cout << "h(n): " << heuristicaEstado<<" : ";
 		cout << "f(n):" << profundidad + heuristicaEstado;
 		cout << endl;
 	}
