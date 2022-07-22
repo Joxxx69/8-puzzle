@@ -285,7 +285,7 @@ int main()
 	}
 	else
 	{
-		cout << "El costo heuristico es " << distanciaManhattan<< ", por lo tanto es mayor a 10";
+		cout << "El costo heuristico es " << manhattan(estadoInicial,0)<< ", por lo tanto es mayor a 10";
 	}
 	return 0;
 }
