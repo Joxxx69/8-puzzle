@@ -255,7 +255,7 @@ int main()
 	estadosPrint(estadoInicial);
 	int distanciaManhattan = manhattan(estadoInicial, 0);
 
-	if (manhattan(estadoInicial, 0) <= 15)
+	if (manhattan(estadoInicial, 0) <= 10)
 	{
 		cout << "El valor heuristico es de " << distanciaManhattan << endl;
 		if (existeSolucion(obtenerInversiones(arregloAux)))
