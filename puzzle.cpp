@@ -169,9 +169,8 @@ void encontrarSolucion(vector<vector<int>> a, int moves)
 		vector<vector<int>> aux = colaP.top().first;
 		colaP.pop();
 		visitados[aux] = true;
-		// if (aux == estadoObjetivo){ // print(s)
 		if (estadoObjetivoAlcanzado(aux))
-		{ // print(s)
+		{ 
 			estadosPrint(aux);
 			break;
 		}
