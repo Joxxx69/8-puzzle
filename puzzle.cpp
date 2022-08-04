@@ -264,7 +264,7 @@ int main()
 	estadosPrint(estadoInicial);
 	int distanciaManhattan = manhattan(estadoInicial, 0);
 
-	if (distanciaManhattan <= 10)
+	if (distanciaManhattan <= 14)
 	{
 		if (distanciaManhattan == 0)
 		{
